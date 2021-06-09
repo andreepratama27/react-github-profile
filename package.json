@@ -54,6 +54,13 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.4"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "*.{js,ts.tsx}": [
+      "eslint --quiet --fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
