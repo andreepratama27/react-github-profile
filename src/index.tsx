@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { NotificationProvider } from "./context/_notification";
 
 ReactDOM.render(
   <React.StrictMode>

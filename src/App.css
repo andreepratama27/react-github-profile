@@ -5,3 +5,26 @@
   height: 100vh;
   @apply bg-gray-900;
 }
+
+.loader-wrapper {
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.loader {
+  margin: 0;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid grey;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
