@@ -1,6 +1,6 @@
 # React Github Profile
 
 ## Todo
-- [] Fetch API
-- [] Pagination with Intersection Observer
-- [] Lazy Load Component
+- [x] Fetch API
+- [ ] Pagination with Intersection Observer
+- [ ] Lazy Load Component
