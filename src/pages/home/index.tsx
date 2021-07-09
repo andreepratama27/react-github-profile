@@ -1,61 +1,23 @@
 import * as React from "react";
-import { getUserProfile, getUserRepositories } from "../../api";
-import { Loader, SearchInput, UserCard, UserHeader } from "../../components";
-import { Repo } from "../../models/_repos";
-import { User } from "../../models/_users";
+import { Loader, SearchInput } from "components";
+import { UserHeaderFallback } from "components/user-header/user-header";
+import { RepoListFallback } from "components/repo-list/repo-list";
 
-const EmptyState = () => {
-  return (
-    <div id="empty-state">
-      <p className="text-white text-gray-500 text-center text-xl">
-        Your search result will shown here
-      </p>
-    </div>
-  );
-};
+const UserHeader = React.lazy(() => import("components/user-header"));
+const RepoList = React.lazy(() => import("components/repo-list"));
 
 const Home = () => {
-  const [username, setUsername] = React.useState("");
-  const [profile, setProfile] = React.useState<User | null>(null);
-  const [repos, setRepos] = React.useState<Repo[]>([]);
-  const [loading, setLoading] = React.useState(false);
+  const loading = false;
+  const [tempUsername, setTempUsername] = React.useState<string>("");
+  const [username, setUsername] = React.useState<string>("");
 
   const onKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(event.target.value);
+    setTempUsername(event.target.value);
   };
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      fetchProfile();
-    }
-  };
-
-  const fetchProfile = async () => {
-    try {
-      setLoading(true);
-      setProfile(null);
-
-      const result = await getUserProfile(username);
-      setProfile(result);
-    } catch (err) {
-      console.error("Error ", err);
-    } finally {
-      setLoading(false);
-      fetchUserRepos();
-    }
-  };
-
-  const fetchUserRepos = async () => {
-    try {
-      setLoading(true);
-
-      const result = await getUserRepositories(username);
-      setRepos(result);
-      console.log("Repos ", result);
-    } catch (err) {
-      console.error("Error ", err);
-    } finally {
-      setLoading(false);
+      setUsername(tempUsername);
     }
   };
 
@@ -65,19 +27,17 @@ const Home = () => {
 
       <div id="search-result">
         {loading && <Loader />}
-        {profile && <UserHeader {...profile} />}
 
-        {repos.length ? (
-          <div
-            id="user-repository"
-            className="grid grid-cols-2 gap-4 bg-scroll"
-          >
-            {repos.map((repo: Repo, key) => (
-              <UserCard key={key} {...repo} />
-            ))}
-          </div>
-        ) : (
-          <EmptyState />
+        {username && (
+          <>
+            <React.Suspense fallback={UserHeaderFallback}>
+              <UserHeader username={username} />
+            </React.Suspense>
+
+            <React.Suspense fallback={RepoListFallback}>
+              <RepoList username={username} />
+            </React.Suspense>
+          </>
         )}
       </div>
     </div>
