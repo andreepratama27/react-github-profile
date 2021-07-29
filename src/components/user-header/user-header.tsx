@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getUserProfile } from "../../api";
-import { User } from "../../models/_users";
+import { getUserProfile } from "api";
+import { User } from "models/_users";
 
 export const UserHeaderFallback = () => (
   <div>
@@ -25,6 +25,10 @@ export default function UserHeader({ username }: { username: string }) {
 
     fetchProfile();
   }, []);
+
+  if (!profile) {
+    return null;
+  }
 
   return (
     <div id="user-badge" className="mb-8">
