@@ -1,14 +1,11 @@
 import * as React from "react";
-import { Repo } from "../../models/_repos";
+import { Repo } from "models/_repos";
 
-const UserCard: React.FC<Repo> = ({
-  forks_count,
-  stargazers_count,
-  name,
-  language,
-}) => {
+const UserCard = React.forwardRef<HTMLDivElement, Repo>((props, ref) => {
+  const { forks_count, stargazers_count, name, language } = props;
+
   return (
-    <div className="w-full p-4 rounded-sm bg-gray-800">
+    <div ref={ref} className="w-full p-4 rounded-sm bg-gray-800">
       <div className="user-repository__header flex flex-row w-full justify-between">
         <div className="category-list">
           <ul className="flex flex-row">
@@ -25,6 +22,8 @@ const UserCard: React.FC<Repo> = ({
       <p className="text-lg text-white">{name}</p>
     </div>
   );
-};
+});
+
+UserCard.displayName = "UserCard";
 
 export default UserCard;
