@@ -2,5 +2,5 @@
 
 ## Todo
 - [x] Fetch API
-- [ ] Pagination with Intersection Observer
-- [ ] Lazy Load Component
+- [x] Pagination with Intersection Observer
+- [x] Lazy Load Component
